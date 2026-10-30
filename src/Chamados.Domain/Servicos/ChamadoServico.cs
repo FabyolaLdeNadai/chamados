@@ -15,6 +15,10 @@ public sealed class ChamadoServico(IChamadoRepositorio repositorio, TimeProvider
         return chamado;
     }
 
+    /// <summary>Consulta um chamado. Devolve null quando o Id não existe.</summary>
+    public Task<Chamado?> ObterAsync(Guid id, CancellationToken cancellationToken = default)
+        => repositorio.ObterAsync(id, cancellationToken);
+
     public Task<Chamado> IniciarAtendimentoAsync(Guid id, string responsavel, CancellationToken cancellationToken = default)
         => AlterarAsync(id, chamado => chamado.IniciarAtendimento(responsavel, relogio.GetUtcNow()), cancellationToken);
 
@@ -38,7 +42,7 @@ public sealed class ChamadoServico(IChamadoRepositorio repositorio, TimeProvider
             .Where(c => string.IsNullOrWhiteSpace(filtro.Texto)
                         || c.Titulo.Contains(filtro.Texto, StringComparison.OrdinalIgnoreCase)
                         || (c.Descricao?.Contains(filtro.Texto, StringComparison.OrdinalIgnoreCase) ?? false))
-            .OrderByDescending(c => c.Prioridade)
+                                    .OrderByDescending(c => c.Prioridade)
             .ThenBy(c => c.CriadoEm)
             .Select(ResumoChamado.De)
             .ToList();
