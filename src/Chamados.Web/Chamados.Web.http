@@ -1,0 +1,22 @@
+@base = http://localhost:5249
+
+### Lista todos, ordenados por prioridade
+GET {{base}}/chamados
+
+### Filtros combinados
+GET {{base}}/chamados?status=Aberto&prioridadeMinima=Alta
+
+### Busca por texto (título ou descrição, sem diferenciar maiúsculas)
+GET {{base}}/chamados?texto=sala
+
+### Estatísticas
+GET {{base}}/chamados/estatisticas
+
+### Inicia atendimento: copie um Id com status Aberto da listagem
+   @id = 92c66e0b-dab6-462f-bdfa-7387d633aa8d
+POST {{base}}/chamados/{{id}}/atendimento
+Content-Type: application/json
+
+ {
+     "responsavel": "  "
+   }
