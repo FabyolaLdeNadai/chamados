@@ -12,11 +12,29 @@ GET {{base}}/chamados?texto=sala
 ### Estatísticas
 GET {{base}}/chamados/estatisticas
 
-### Inicia atendimento: copie um Id com status Aberto da listagem
-   @id = 92c66e0b-dab6-462f-bdfa-7387d633aa8d
+### Id usado pelas três requisições abaixo: copie da listagem
+@id = 224abea2-e756-41a5-85be-8b75dea559dc
+
+### Inicia atendimento: use o Id de um chamado Aberto
 POST {{base}}/chamados/{{id}}/atendimento
 Content-Type: application/json
 
- {
-     "responsavel": "  "
-   }
+{
+  "responsavel": "Elétrica"
+}
+
+### Resolver: use o Id de um chamado EmAtendimento
+POST {{base}}/chamados/{{id}}/resolucao
+Content-Type: application/json
+
+{
+  "solucao": "Tomada fixada"
+}
+
+### Cancelar: use o Id de um chamado Aberto ou EmAtendimento
+POST {{base}}/chamados/{{id}}/cancelamento
+Content-Type: application/json
+
+{
+  "motivo": " "
+}
