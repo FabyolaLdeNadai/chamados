@@ -54,3 +54,17 @@ Content-Type: application/json
 {
   "motivo": "Aberto em duplicidade"
 }
+
+### Edição com concorrência otimista (Módulo 4): copie id e versao de um chamado da listagem
+@versao = 1
+PUT {{base}}/api/chamados/{{id}}
+Content-Type: application/json
+
+{
+  "titulo": "Título editado pela API",
+  "prioridade": "Alta",
+  "descricao": null,
+  "versaoEsperada": {{versao}}
+}
+
+### Repita o PUT acima sem mudar @versao: a segunda resposta é 409 (versão desatualizada)
